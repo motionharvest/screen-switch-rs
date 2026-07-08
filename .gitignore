@@ -1,0 +1,7 @@
+# Build output
+/target
+
+# Local runtime config (lives in %LOCALAPPDATA%\ScreenSwitchRs; never committed)
+config.json
+
+# Cargo.lock IS committed: this is a binary app, so we want reproducible builds.
