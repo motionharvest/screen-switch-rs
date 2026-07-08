@@ -17,9 +17,12 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 $exe = Join-Path $env:CARGO_TARGET_DIR "release\screen-switch-rs.exe"
+$tui = Join-Path $env:CARGO_TARGET_DIR "release\screen-switch-tui.exe"
 Write-Host ""
-Write-Host "Build complete: $exe" -ForegroundColor Green
-if (Test-Path $exe) {
-    $size = [math]::Round((Get-Item $exe).Length / 1KB, 1)
-    Write-Host "Size: $size KB" -ForegroundColor Gray
+Write-Host "Build complete:" -ForegroundColor Green
+foreach ($f in @($exe, $tui)) {
+    if (Test-Path $f) {
+        $size = [math]::Round((Get-Item $f).Length / 1KB, 1)
+        Write-Host ("  {0}  ({1} KB)" -f $f, $size) -ForegroundColor Gray
+    }
 }

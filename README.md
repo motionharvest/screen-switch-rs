@@ -52,6 +52,26 @@ Output: `%LOCALAPPDATA%\screen-switch-rs\target\release\screen-switch-rs.exe`
 Runs elevated so injected keys can reach elevated target apps. The console logs
 every detected switch and injection result.
 
+## Config TUI
+
+```powershell
+.\tui.ps1
+```
+
+Opens an interactive console (`screen-switch-tui`) for configuring everything
+without hand-editing JSON. It edits the same `config.json` the background watcher
+hot-reloads, so changes take effect within ~2s while the service keeps running.
+
+- Live table of detected monitors; the one under the cursor is marked `●`.
+- `↑/↓` select a monitor.
+- `Enter` capture a shortcut by pressing the actual chord (e.g. Ctrl+Shift+Home).
+- `e` type a shortcut string instead; `x` clears it.
+- `h` edit the chord hold time (ms).
+- `t` test-fire the selected monitor's shortcut.
+- `r` re-scan monitors; `q` quits.
+
+All edits auto-save immediately.
+
 ## Configure
 
 On first run it writes `%LOCALAPPDATA%\ScreenSwitchRs\config.json` (shared by the
@@ -107,7 +127,12 @@ every detected switch, the foreground window the shortcut was sent to, and the
 
 ## Layout
 
-- `src/main.rs` — DPI setup, monitor listing, poll loop, config hot-reload.
+Two binaries share a small library:
+
+- `src/lib.rs` — re-exports the shared modules below.
+- `src/config.rs` — JSON config load / template (BOM-tolerant).
 - `src/monitors.rs` — monitor enumeration + cursor-to-monitor resolution.
 - `src/keys.rs` — shortcut parsing + `SendInput` chord injection.
-- `src/config.rs` — JSON config load / template (BOM-tolerant).
+- `src/main.rs` — **watcher** binary: DPI setup, poll loop, config hot-reload
+  (windowless, `#![windows_subsystem = "windows"]`).
+- `src/bin/tui.rs` — **config console** binary (`ratatui`/`crossterm`).

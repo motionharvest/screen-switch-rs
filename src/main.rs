@@ -12,9 +12,7 @@
 //! hook, this loop cannot be starved or silently removed, so crossings are not
 //! missed regardless of speed or how the monitors are arranged.
 
-mod config;
-mod keys;
-mod monitors;
+use screen_switch_rs::{config, keys, monitors};
 
 use std::ffi::c_void;
 use std::io::Write;
