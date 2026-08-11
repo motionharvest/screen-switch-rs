@@ -62,13 +62,14 @@ Opens an interactive console (`screen-switch-tui`) for configuring everything
 without hand-editing JSON. It edits the same `config.json` the background watcher
 hot-reloads, so changes take effect within ~2s while the service keeps running.
 
-- Live table of detected monitors; the one under the cursor is marked `●`.
-- `↑/↓` select a monitor.
-- `Enter` capture a shortcut by pressing the actual chord (e.g. Ctrl+Shift+Home).
+- Spatial map of monitors as rounded cards (name underneath); the monitor under
+  the cursor is highlighted in pink (`#F445F7`). Selection uses a white outline.
+- Click a card (or `←/→`) to select; click again (or `Enter`) to capture a chord.
 - `e` type a shortcut string instead; `x` clears it.
-- `h` edit the chord hold time (ms).
+- Click the header **hold** value (or `h`) to edit chord hold time (ms).
 - `t` test-fire the selected monitor's shortcut.
 - `r` re-scan monitors; `q` quits.
+- `Esc` cancels capture/edit modes; from the normal view, `Esc` quits.
 
 All edits auto-save immediately.
 
